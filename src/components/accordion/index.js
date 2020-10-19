@@ -3,7 +3,6 @@ import {
   Container,
   Inner,
   Title,
-  Frame,
   Item,
   Header,
   Body,
@@ -23,10 +22,6 @@ Accordion.Title = function AccordionTitle({ children, ...otherProps }) {
   return <Title {...otherProps}>{children}</Title>;
 };
 
-Accordion.Frame = function AccordionFrame({ children, ...otherProps }) {
-  return <Frame {...otherProps}>{children}</Frame>;
-};
-
 Accordion.Item = function AccordionItem({ children, ...otherProps }) {
   const [toggleShow, setToggleShow] = useState(false);
 
@@ -42,6 +37,11 @@ Accordion.Header = function AccordionHeader({ children, ...otherProps }) {
   return (
     <Header onClick={() => setToggleShow(!toggleShow)} {...otherProps}>
       {children}
+      {toggleShow ? (
+        <img src="/images/icons/close-slim.png" alt="Close" />
+      ) : (
+        <img src="/images/icons/add.png" alt="Open" />
+      )}
     </Header>
   );
 };
