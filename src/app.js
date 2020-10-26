@@ -1,14 +1,14 @@
 import React from "react";
-import JumbotronContainer from "./containers/jumbotron";
-import FooterContainer from "./containers/footer";
-import FaqsContainer from "./containers/accordion";
+import { Route, BrowserRouter } from "react-router-dom";
+import * as ROUTES from "./constants/routes";
+import Home from "./pages/home";
+import Signin from "./pages/signin";
 
 export default function App() {
   return (
-    <>
-      <JumbotronContainer />
-      <FaqsContainer />
-      <FooterContainer />
-    </>
+    <BrowserRouter>
+      <Route path={ROUTES.SIGNIN} component={Signin} />
+      <Route exact path={ROUTES.HOME} component={Home} />
+    </BrowserRouter>
   );
 }
