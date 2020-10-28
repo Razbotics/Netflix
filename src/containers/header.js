@@ -6,7 +6,11 @@ function HeaderContainer({ children }) {
   return (
     <Header>
       <Header.Frame>
-        <Header.Logo to={ROUTES.HOME} src="" alt="Netflix" />
+        <Header.Logo
+          to={ROUTES.HOME}
+          src="/images/misc/logo.svg"
+          alt="Netflix"
+        />
         <Header.Button to={ROUTES.SIGNIN}>Sign In</Header.Button>
       </Header.Frame>
       {children}
@@ -15,4 +19,4 @@ function HeaderContainer({ children }) {
 }
 
 export default HeaderContainer;
-// /images/misc/netflix-logo.jpg
+//
