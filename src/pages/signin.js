@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Form } from "../components";
 import * as ROUTES from "../constants/routes";
 import FooterContainer from "../containers/footer";
@@ -8,7 +7,7 @@ import { FirebaseContext } from "../context/firebase";
 
 function Signin() {
   const { firebase } = useContext(FirebaseContext);
-  const history = useHistory();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -17,7 +16,6 @@ function Signin() {
     event.preventDefault();
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
-      history.push(ROUTES.BROWSE);
     } catch (error) {
       setEmail("");
       setPassword("");

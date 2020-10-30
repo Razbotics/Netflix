@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
 import { Form } from "../components";
 import * as ROUTES from "../constants/routes";
 import FooterContainer from "../containers/footer";
@@ -8,7 +7,6 @@ import { FirebaseContext } from "../context/firebase";
 
 function Signup() {
   const { firebase } = useContext(FirebaseContext);
-  const history = useHistory();
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +22,6 @@ function Signup() {
         displayName: userName,
         photoURL: Math.floor(Math.random() * 5) + 1,
       });
-      history.push(ROUTES.BROWSE);
     } catch (error) {
       setUserName("");
       setEmail("");

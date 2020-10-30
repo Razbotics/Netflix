@@ -1,15 +1,30 @@
-import React from "react";
-import { Route, BrowserRouter } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Route, BrowserRouter, Redirect } from "react-router-dom";
+import ProtectedRoute from "./components/common/protectedRoute";
+import { firebase } from "./lib/firebase.prod";
+import { FirebaseContext, FirebaseAuthContext } from "./context/firebase";
 import * as ROUTES from "./constants/routes";
 import { Browse, Home, Signin, Signup } from "./pages";
 
 export default function App() {
+  const [user, setUser] = useState(null);
+  const auth = firebase.auth();
+
+  useEffect(() => {
+    auth.onAuthStateChanged((usr) => setUser(usr));
+  }, [auth]);
+
   return (
-    <BrowserRouter>
-      <Route path={ROUTES.SIGNIN} component={Signin} />
-      <Route path={ROUTES.SIGNUP} component={Signup} />
-      <Route path={ROUTES.BROWSE} component={Browse} />
-      <Route exact path={ROUTES.HOME} component={Home} />
-    </BrowserRouter>
+    <FirebaseContext.Provider value={{ firebase }}>
+      <FirebaseAuthContext.Provider value={{ user }}>
+        <BrowserRouter>
+          {user && <Redirect to={ROUTES.BROWSE} />}
+          <Route exact path={ROUTES.SIGNIN} component={Signin} />
+          <Route exact path={ROUTES.SIGNUP} component={Signup} />
+          <ProtectedRoute exact path={ROUTES.BROWSE} component={Browse} />
+          <Route exact path={ROUTES.HOME} component={Home} />
+        </BrowserRouter>
+      </FirebaseAuthContext.Provider>
+    </FirebaseContext.Provider>
   );
 }
