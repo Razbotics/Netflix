@@ -17,9 +17,16 @@ function Signup() {
   const handleSignup = async (event) => {
     event.preventDefault();
     try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
+      const result = await firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password);
+      await result.user.updateProfile({
+        displayName: userName,
+        photoURL: Math.floor(Math.random() * 5) + 1,
+      });
       history.push(ROUTES.BROWSE);
     } catch (error) {
+      setUserName("");
       setEmail("");
       setPassword("");
       setError(error.message);
@@ -35,7 +42,7 @@ function Signup() {
           <Form.Base onSubmit={handleSignup}>
             <Form.Input
               type="text"
-              placeholder="Username"
+              placeholder="First name"
               value={userName}
               onChange={({ target }) => setUserName(target.value)}
             />
@@ -60,8 +67,8 @@ function Signup() {
             </Form.Submit>
           </Form.Base>
           <Form.Text>
-            Already have an account?{" "}
-            <Form.Link to={ROUTES.SIGNIN}>Sign In Now</Form.Link>
+            Already an user?{" "}
+            <Form.Link to={ROUTES.SIGNIN}>Sign in now</Form.Link>
           </Form.Text>
           <Form.TextSmall>
             This page is protected by Google reCAPTCHA to ensure you're not a
