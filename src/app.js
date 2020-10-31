@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Route, BrowserRouter, Redirect } from "react-router-dom";
-import ProtectedRoute from "./components/common/protectedRoute";
 import { firebase } from "./lib/firebase.prod";
 import { FirebaseContext, FirebaseAuthContext } from "./context/firebase";
 import * as ROUTES from "./constants/routes";
 import { Browse, Home, Signin, Signup } from "./pages";
-import { Loading } from "./components";
+import { Loading, ProtectedRoute } from "./components";
 
 export default function App() {
   const [user, setUser] = useState(null);
