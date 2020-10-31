@@ -5,18 +5,26 @@ import { firebase } from "./lib/firebase.prod";
 import { FirebaseContext, FirebaseAuthContext } from "./context/firebase";
 import * as ROUTES from "./constants/routes";
 import { Browse, Home, Signin, Signup } from "./pages";
+import { Loading } from "./components";
 
 export default function App() {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
   const auth = firebase.auth();
 
   useEffect(() => {
-    auth.onAuthStateChanged((usr) => setUser(usr));
+    setLoading(true);
+    auth.onAuthStateChanged((usr) => {
+      setUser(usr);
+      setLoading(false);
+    });
   }, [auth]);
 
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <FirebaseContext.Provider value={{ firebase }}>
-      <FirebaseAuthContext.Provider value={{ user }}>
+      <FirebaseAuthContext.Provider value={{ user, loading }}>
         <BrowserRouter>
           {user && <Redirect to={ROUTES.BROWSE} />}
           <Route exact path={ROUTES.SIGNIN} component={Signin} />
