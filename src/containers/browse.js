@@ -9,16 +9,11 @@ function BrowseContainer({ slides }) {
   const [searchTerm, setSearchTerm] = useState("");
   const { firebase } = useContext(FirebaseContext);
   const { user } = useContext(FirebaseAuthContext);
-
   return profile ? (
-    <Header src="joker1" dontShowOnSmallViewPort>
+    <Header src="joker1">
       <Header.Frame>
         <Header.Group>
-          <Header.Logo
-            to={ROUTES.HOME}
-            src="/images/misc/logo.svg"
-            alt="Netflix"
-          />
+          <Header.Logo to={ROUTES.HOME} alt="Netflix" />
           <Header.TextLink>Series</Header.TextLink>
           <Header.TextLink>Movies</Header.TextLink>
         </Header.Group>

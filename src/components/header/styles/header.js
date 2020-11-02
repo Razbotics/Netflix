@@ -8,8 +8,9 @@ export const Background = styled.div`
       src ? `../images/misc/${src}.jpg` : "../images/misc/home-bg.jpg"})
     top left / cover no-repeat;
   @media (max-width: 1000px) {
-    ${({ dontShowOnSmallViewPort }) =>
-      dontShowOnSmallViewPort && `background: none;`}
+    background: url(${({ src }) =>
+        src ? `../images/misc/${src}.jpg` : "../images/misc/home-bg.jpg"})
+      center / cover no-repeat;
   }
 `;
 
@@ -28,13 +29,19 @@ export const Container = styled.div`
   }
 `;
 
-export const Logo = styled.img`
+export const Logo = styled.div`
   height: 32px;
   width: 108px;
   margin-right: 40px;
-  @media (min-width: 1449px) {
-    height: 45px;
-    width: 167px;
+  background: url("/images/misc/logo.svg") center / cover no-repeat;
+  background-size: contain;
+  @media (max-width: 1000px) {
+    margin-right: 20px;
+    height: 40px;
+    width: 25px;
+    background: url("/images/misc/logo-small.svg") center / cover no-repeat;
+  }
+ 
   }
 `;
 
@@ -75,10 +82,6 @@ export const SearchInput = styled.input`
 export const Search = styled.div`
   display: flex;
   align-items: center;
-  svg {
-    color: white;
-    cursor: pointer;
-  }
   @media (max-width: 700px) {
     display: none;
   }
@@ -155,7 +158,7 @@ export const Feature = styled(Container)`
   align-items: normal;
   width: 40%;
   @media (max-width: 1000px) {
-    display: none;
+    width: 80%;
   }
 `;
 
