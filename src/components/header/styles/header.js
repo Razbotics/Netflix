@@ -6,11 +6,11 @@ export const Background = styled.div`
   flex-direction: column;
   background: url(${({ src }) =>
       src ? `../images/misc/${src}.jpg` : "../images/misc/home-bg.jpg"})
-    top left / cover no-repeat;
+    top center / cover no-repeat;
   @media (max-width: 1000px) {
     background: url(${({ src }) =>
         src ? `../images/misc/${src}.jpg` : "../images/misc/home-bg.jpg"})
-      center / cover no-repeat;
+      top center / cover no-repeat;
   }
 `;
 
