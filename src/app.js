@@ -25,6 +25,7 @@ export default function App() {
     <FirebaseContext.Provider value={{ firebase }}>
       <FirebaseAuthContext.Provider value={{ user, loading }}>
         <BrowserRouter>
+          <Loading.ReleaseBody />
           {user && <Redirect to={ROUTES.BROWSE} />}
           <Route exact path={ROUTES.SIGNIN} component={Signin} />
           <Route exact path={ROUTES.SIGNUP} component={Signup} />
