@@ -44,7 +44,7 @@ export const TextLink = styled.p`
   margin-right: 30px;
   font-size: 22px;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.45);
-  font-weight: ${({ active }) => (active === "true" ? "700" : "500")};
+  font-weight: ${({ active }) => (active ? "700" : "normal")};
   cursor: pointer;
   &:hover {
     font-weight: bold;
@@ -66,10 +66,10 @@ export const SearchInput = styled.input`
   transition: width 0.5s;
   height: 30px;
   font-size: 14px;
-  margin-left: ${({ active }) => (active === true ? "10px" : "0")};
-  padding: ${({ active }) => (active === true ? "0 10px" : "0")};
-  opacity: ${({ active }) => (active === true ? "1" : "0")};
-  width: ${({ active }) => (active === true ? "200px" : "0px")};
+  margin-left: ${({ active }) => (active ? "10px" : "0")};
+  padding: ${({ active }) => (active ? "0 10px" : "0")};
+  opacity: ${({ active }) => (active ? "1" : "0")};
+  width: ${({ active }) => (active ? "200px" : "0px")};
 `;
 
 export const Search = styled.div`
@@ -85,6 +85,8 @@ export const Search = styled.div`
 `;
 
 export const SearchIcon = styled.button`
+  display: flex;
+  padding: 6px;
   cursor: pointer;
   background-color: transparent;
   border: 0;
