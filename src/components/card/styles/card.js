@@ -54,12 +54,23 @@ export const Text = styled.p`
   margin-bottom: 0;
   user-select: none;
   display: none;
-  line-height: normal;
+  line-height: 1.5em;
 `;
 
 export const Entities = styled.div`
   display: flex;
   flex-direction: row;
+  scroll-direction: horizontal;
+  @media (max-width: 1000px) {
+    overflow-x: scroll;
+    ::-webkit-scrollbar {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: transparent;
+    }
+  }
 `;
 
 export const Meta = styled.div`
@@ -73,11 +84,14 @@ export const Meta = styled.div`
 export const Image = styled.img`
   border: 0;
   width: 100%;
-  max-width: 305px;
+  width: 350px;
   cursor: pointer;
   height: auto;
   padding: 0;
   margin: 0;
+  @media (max-width: 1000px) {
+    width: 300px;
+  }
 `;
 
 export const Item = styled.div`
@@ -87,9 +101,11 @@ export const Item = styled.div`
   position: relative;
   cursor: pointer;
   transition: transform 0.2s;
-  &:hover {
-    transform: scale(1.3);
-    z-index: 99;
+  @media (min-width: 1000px) {
+    &:hover {
+      transform: scale(1.3);
+      z-index: 99;
+    }
   }
   @media (min-width: 1200px) {
     &:hover ${Meta}, &:hover ${Text}, &:hover ${SubTitle} {
@@ -112,6 +128,7 @@ export const Item = styled.div`
 `;
 
 export const FeatureText = styled.p`
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.45);
   font-size: 18px;
   color: white;
   font-weight: ${({ fontWeight }) =>
@@ -133,7 +150,7 @@ export const Feature = styled.div`
   background-repeat: no-repeat;
   background-color: black;
   @media (max-width: 1000px) {
-    height: auto;
+    max-height: auto;
     background-size: auto;
     ${Title} {
       font-size: 20px;
@@ -147,6 +164,7 @@ export const Feature = styled.div`
 `;
 
 export const FeatureTitle = styled(Title)`
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.45);
   margin-left: 0;
 `;
 
