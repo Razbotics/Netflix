@@ -30,8 +30,8 @@ function BrowseContainer({ slides }) {
               Series
             </Header.TextLink>
             <Header.TextLink
-              active={category === "movies"}
-              onClick={() => setCategory("movies")}
+              active={category === "films"}
+              onClick={() => setCategory("films")}
             >
               Movies
             </Header.TextLink>
