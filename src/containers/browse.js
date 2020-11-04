@@ -1,21 +1,48 @@
 import React, { useContext, useState, useEffect } from "react";
+import Fuse from "fuse.js";
+import useContent from "../hooks/useContent";
+import selectionMap from "../utils/selectionMap";
 import { Header, Card, Player } from "../components";
 import { FirebaseAuthContext, FirebaseContext } from "../context/firebase";
 import SelectProfileContainer from "./profile";
 import * as ROUTES from "../constants/routes";
 
-function BrowseContainer({ slides }) {
+function BrowseContainer() {
+  const series = useContent("series");
+  const films = useContent("films");
+
   const [category, setCategory] = useState("series");
-  const [profile, setProfile] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [fetchData, setFetchData] = useState({});
   const [slideRows, setSlideRows] = useState([]);
+  const [slides, setSlides] = useState({});
+  const [profile, setProfile] = useState(null);
+  const [searchActive, setSearchActive] = useState(false);
 
   const { firebase } = useContext(FirebaseContext);
   const { user } = useContext(FirebaseAuthContext);
 
   useEffect(() => {
-    setSlideRows(slides[category]);
-  }, [slides, category]);
+    const data = selectionMap({ series, films });
+    setFetchData({ series, films });
+    setSlides(data);
+    setSlideRows(data[category]);
+  }, [series, films, category]);
+
+  const searchSlides = (searchTerm) => {
+    console.log(slides[category]);
+    const fuse = new Fuse(fetchData[category], {
+      keys: ["description", "title", "genre"],
+    });
+    const results = fuse.search(searchTerm).map(({ item }) => item);
+    if (searchTerm.length > 3 && results.length > 0) {
+      const searchData = { ...fetchData };
+      searchData[category] = results;
+      const newSlides = selectionMap(searchData);
+      setSlideRows(newSlides[category]);
+    } else {
+      setSlideRows(slides[category]);
+    }
+  };
 
   return profile ? (
     <>
@@ -25,13 +52,19 @@ function BrowseContainer({ slides }) {
             <Header.Logo to={ROUTES.HOME} alt="Netflix" />
             <Header.TextLink
               active={category === "series"}
-              onClick={() => setCategory("series")}
+              onClick={() => {
+                setCategory("series");
+                setSlideRows(slides["series"]);
+              }}
             >
               Series
             </Header.TextLink>
             <Header.TextLink
               active={category === "films"}
-              onClick={() => setCategory("films")}
+              onClick={() => {
+                setCategory("films");
+                setSlideRows(slides["films"]);
+              }}
             >
               Movies
             </Header.TextLink>
@@ -39,23 +72,26 @@ function BrowseContainer({ slides }) {
 
           <Header.Group>
             <Header.Search
-              searchTerm={searchTerm}
-              setSearchTerm={setSearchTerm}
+              onSearch={searchSlides}
+              searchActive={searchActive}
+              setSearchActive={setSearchActive}
             />
-            <Header.Profile>
-              <Header.Picture src={user.photoURL} />
-              <Header.Dropdown>
-                <Header.Group>
-                  <Header.Picture src={user.photoURL} />
-                  <Header.TextLink>{user.displayName}</Header.TextLink>
-                </Header.Group>
-                <Header.Group>
-                  <Header.TextLink onClick={() => firebase.auth().signOut()}>
-                    Sign Out
-                  </Header.TextLink>
-                </Header.Group>
-              </Header.Dropdown>
-            </Header.Profile>
+            {!searchActive && (
+              <Header.Profile>
+                <Header.Picture src={user.photoURL} />
+                <Header.Dropdown>
+                  <Header.Group>
+                    <Header.Picture src={user.photoURL} />
+                    <Header.TextLink>{user.displayName}</Header.TextLink>
+                  </Header.Group>
+                  <Header.Group>
+                    <Header.TextLink onClick={() => firebase.auth().signOut()}>
+                      Sign Out
+                    </Header.TextLink>
+                  </Header.Group>
+                </Header.Dropdown>
+              </Header.Profile>
+            )}
           </Header.Group>
         </Header.Frame>
 

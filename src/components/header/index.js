@@ -29,19 +29,23 @@ Header.Frame = ({ children, ...otherProps }) => {
 };
 
 Header.Search = function HeaderSearch({
-  searchTerm,
-  setSearchTerm,
+  onSearch,
+  searchActive,
+  setSearchActive,
   ...otherProps
 }) {
-  const [searchActive, setSearchActive] = useState(false);
+  const [value, setValue] = useState("");
   return (
     <Search {...otherProps}>
       <SearchIcon onClick={() => setSearchActive(!searchActive)}>
         <img src="/images/icons/search.png" alt="Search" />
       </SearchIcon>
       <SearchInput
-        value={searchTerm}
-        onChange={({ target }) => setSearchTerm(target.value)}
+        value={value}
+        onChange={({ target }) => {
+          setValue(target.value);
+          onSearch(target.value);
+        }}
         placeholder="Search films and series"
         active={searchActive}
       />

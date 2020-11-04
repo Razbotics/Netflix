@@ -59,6 +59,10 @@ export const TextLink = styled.p`
   &:last-of-type {
     margin-right: 0;
   }
+  @media (max-width: 700px) {
+    margin-right: 20px;
+    font-size: 18px;
+  }
 `;
 
 export const Group = styled.div`
@@ -76,15 +80,15 @@ export const SearchInput = styled.input`
   margin-left: ${({ active }) => (active ? "10px" : "0")};
   padding: ${({ active }) => (active ? "0 10px" : "0")};
   opacity: ${({ active }) => (active ? "1" : "0")};
-  width: ${({ active }) => (active ? "200px" : "0px")};
+  width: ${({ active }) => (active ? "250px" : "0px")};
+  @media (max-width: 700px) {
+    width: ${({ active }) => (active ? "150px" : "0px")};
+  }
 `;
 
 export const Search = styled.div`
   display: flex;
   align-items: center;
-  @media (max-width: 700px) {
-    display: none;
-  }
 `;
 
 export const SearchIcon = styled.button`
