@@ -4,7 +4,7 @@ import useContent from "../hooks/useContent";
 import selectionMap from "../utils/selectionMap";
 import { Header, Card, Player } from "../components";
 import { FirebaseAuthContext, FirebaseContext } from "../context/firebase";
-import SelectProfileContainer from "./profile";
+
 import * as ROUTES from "../constants/routes";
 
 function BrowseContainer() {
@@ -15,7 +15,7 @@ function BrowseContainer() {
   const [fetchData, setFetchData] = useState({});
   const [slideRows, setSlideRows] = useState([]);
   const [slides, setSlides] = useState({});
-  const [profile, setProfile] = useState(null);
+
   const [searchActive, setSearchActive] = useState(false);
 
   const { firebase } = useContext(FirebaseContext);
@@ -44,7 +44,7 @@ function BrowseContainer() {
     }
   };
 
-  return profile ? (
+  return (
     <>
       <Header src="joker1">
         <Header.Frame>
@@ -135,8 +135,6 @@ function BrowseContainer() {
         ))}
       </Card.Group>
     </>
-  ) : (
-    <SelectProfileContainer user={user} setProfile={setProfile} />
   );
 }
 
